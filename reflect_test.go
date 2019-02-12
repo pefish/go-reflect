@@ -39,6 +39,13 @@ type BaseModel struct {
 	UpdatedAt string `db:"updated_at" json:"updated_at"`
 }
 
+func TestReflectClass_ToInt64(t *testing.T) {
+	a := `12`
+	if Reflect.ToInt64(a[0]) != 1 {
+		t.Error()
+	}
+}
+
 func TestReflectClass_ToString(t *testing.T) {
 	var a *float64
 	b := 0.34

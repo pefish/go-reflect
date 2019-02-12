@@ -91,6 +91,12 @@ func (this *ReflectClass) ToInt64(val interface{}) int64 {
 		return int64(val.(float64))
 	} else if kind == reflect.Uint64 {
 		return int64(val.(uint64))
+	} else if kind == reflect.Uint8 {
+		int_, err := strconv.ParseInt(string(val.(uint8)), 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		return int_
 	} else {
 		panic(errors.New(`convert not supported: ` + kind.String()))
 	}

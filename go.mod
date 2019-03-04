@@ -1,1 +1,1 @@
-module gitee.com/pefish/p-go-reflect
+module github.com/pefish/go-reflect

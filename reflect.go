@@ -66,6 +66,12 @@ func (this *ReflectClass) ToInt(val interface{}) int {
 			panic(err)
 		}
 		return int(int_)
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return int(1)
+		} else {
+			return int(0)
+		}
 	} else if kind == reflect.Float32 {
 		return int(val.(float32))
 	} else if kind == reflect.Float64 {
@@ -80,6 +86,8 @@ func (this *ReflectClass) ToInt(val interface{}) int {
 		return int(val.(int32))
 	} else if kind == reflect.Int64 {
 		return int(val.(int64))
+	} else if kind == reflect.Uint {
+		return int(val.(uint))
 	} else if kind == reflect.Uint8 {
 		return int(val.(uint8))
 	} else if kind == reflect.Uint16 {
@@ -101,6 +109,12 @@ func (this *ReflectClass) ToInt64(val interface{}) int64 {
 			panic(err)
 		}
 		return int_
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return int64(1)
+		} else {
+			return int64(0)
+		}
 	} else if kind == reflect.Float32 {
 		return int64(val.(float32))
 	} else if kind == reflect.Float64 {
@@ -115,6 +129,8 @@ func (this *ReflectClass) ToInt64(val interface{}) int64 {
 		return int64(val.(int32))
 	} else if kind == reflect.Int64 {
 		return val.(int64)
+	} else if kind == reflect.Uint {
+		return int64(val.(uint))
 	} else if kind == reflect.Uint8 {
 		return int64(val.(uint8))
 	} else if kind == reflect.Uint16 {
@@ -136,6 +152,12 @@ func (this *ReflectClass) ToUint64(val interface{}) uint64 {
 			panic(err)
 		}
 		return int_
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return uint64(1)
+		} else {
+			return uint64(0)
+		}
 	} else if kind == reflect.Float32 {
 		return uint64(val.(float32))
 	} else if kind == reflect.Float64 {
@@ -150,6 +172,8 @@ func (this *ReflectClass) ToUint64(val interface{}) uint64 {
 		return uint64(val.(int32))
 	} else if kind == reflect.Int64 {
 		return uint64(val.(int64))
+	} else if kind == reflect.Uint {
+		return uint64(val.(uint))
 	} else if kind == reflect.Uint8 {
 		return uint64(val.(uint8))
 	} else if kind == reflect.Uint16 {
@@ -172,21 +196,35 @@ func (this *ReflectClass) ToString(val interface{}) string {
 	typeStr_ := type_.String()
 	if kind == reflect.String {
 		return val.(string)
-	} else if kind == reflect.Int {
-		return strconv.FormatInt(int64(val.(int)), 10)
 	} else if kind == reflect.Bool {
 		return strconv.FormatBool(val.(bool))
+	} else if kind == reflect.Float32 {
+		return strconv.FormatFloat(float64(val.(float32)), 'f', -1, 64)
+	} else if kind == reflect.Float64 {
+		return strconv.FormatFloat(val.(float64), 'f', -1, 64)
+	} else if kind == reflect.Int {
+		return strconv.FormatInt(int64(val.(int)), 10)
+	} else if kind == reflect.Int8 {
+		return strconv.FormatInt(int64(val.(int8)), 10)
+	} else if kind == reflect.Int16 {
+		return strconv.FormatInt(int64(val.(int16)), 10)
+	} else if kind == reflect.Int32 {
+		return strconv.FormatInt(int64(val.(int32)), 10)
 	} else if kind == reflect.Int64 {
 		if typeStr_ == `time.Duration` {
 			return strconv.FormatInt(int64(val.(time.Duration)), 10)
 		}
 		return strconv.FormatInt(val.(int64), 10)
-	} else if kind == reflect.Float64 {
-		return strconv.FormatFloat(val.(float64), 'f', -1, 64)
-	} else if kind == reflect.Uint64 {
-		return strconv.FormatUint(val.(uint64), 10)
 	} else if kind == reflect.Uint {
 		return strconv.FormatUint(uint64(val.(uint)), 10)
+	} else if kind == reflect.Uint8 {
+		return strconv.FormatInt(int64(val.(uint8)), 10)
+	} else if kind == reflect.Uint16 {
+		return strconv.FormatUint(uint64(val.(uint16)), 10)
+	} else if kind == reflect.Uint32 {
+		return strconv.FormatUint(uint64(val.(uint32)), 10)
+	} else if kind == reflect.Uint64 {
+		return strconv.FormatUint(val.(uint64), 10)
 	} else if kind == reflect.Ptr {
 		reflectVal := reflect.ValueOf(val)
 		if reflectVal.IsNil() { // IsNil 只接受 chan, func, interface, map, pointer, or slice value

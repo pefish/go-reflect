@@ -94,6 +94,11 @@ func TestReflectClass_ToInt64(t *testing.T) {
 	if Reflect.ToInt64(l) != 12 {
 		t.Error()
 	}
+
+	var m bool = true
+	if Reflect.ToInt64(m) != 1 {
+		t.Error()
+	}
 }
 
 func TestReflectClass_ToString(t *testing.T) {

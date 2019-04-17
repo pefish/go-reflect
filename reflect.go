@@ -60,16 +60,32 @@ func (this *ReflectClass) getValuesInTagFromStruct(result []string, type_ reflec
 
 func (this *ReflectClass) ToInt(val interface{}) int {
 	kind := reflect.TypeOf(val).Kind()
-	if kind == reflect.Int64 {
-		return int(val.(int64))
-	} else if kind == reflect.String {
+	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
 		if err != nil {
 			panic(err)
 		}
 		return int(int_)
+	} else if kind == reflect.Float32 {
+		return int(val.(float32))
 	} else if kind == reflect.Float64 {
 		return int(val.(float64))
+	} else if kind == reflect.Int {
+		return val.(int)
+	} else if kind == reflect.Int8 {
+		return int(val.(int8))
+	} else if kind == reflect.Int16 {
+		return int(val.(int16))
+	} else if kind == reflect.Int32 {
+		return int(val.(int32))
+	} else if kind == reflect.Int64 {
+		return int(val.(int64))
+	} else if kind == reflect.Uint8 {
+		return int(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return int(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return int(val.(uint32))
 	} else if kind == reflect.Uint64 {
 		return int(val.(uint64))
 	} else {
@@ -79,24 +95,34 @@ func (this *ReflectClass) ToInt(val interface{}) int {
 
 func (this *ReflectClass) ToInt64(val interface{}) int64 {
 	kind := reflect.TypeOf(val).Kind()
-	if kind == reflect.Int64 {
-		return val.(int64)
-	} else if kind == reflect.String {
+	if kind == reflect.String {
 		int_, err := strconv.ParseInt(val.(string), 10, 64)
 		if err != nil {
 			panic(err)
 		}
 		return int_
+	} else if kind == reflect.Float32 {
+		return int64(val.(float32))
 	} else if kind == reflect.Float64 {
 		return int64(val.(float64))
+	} else if kind == reflect.Int {
+		return int64(val.(int))
+	} else if kind == reflect.Int8 {
+		return int64(val.(int8))
+	} else if kind == reflect.Int16 {
+		return int64(val.(int16))
+	} else if kind == reflect.Int32 {
+		return int64(val.(int32))
+	} else if kind == reflect.Int64 {
+		return val.(int64)
+	} else if kind == reflect.Uint8 {
+		return int64(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return int64(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return int64(val.(uint32))
 	} else if kind == reflect.Uint64 {
 		return int64(val.(uint64))
-	} else if kind == reflect.Uint8 {
-		int_, err := strconv.ParseInt(string(val.(uint8)), 10, 64)
-		if err != nil {
-			panic(err)
-		}
-		return int_
 	} else {
 		panic(errors.New(`convert not supported: ` + kind.String()))
 	}
@@ -104,16 +130,32 @@ func (this *ReflectClass) ToInt64(val interface{}) int64 {
 
 func (this *ReflectClass) ToUint64(val interface{}) uint64 {
 	kind := reflect.TypeOf(val).Kind()
-	if kind == reflect.Int64 {
-		return uint64(val.(int64))
-	} else if kind == reflect.String {
+	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
 		if err != nil {
 			panic(err)
 		}
 		return int_
+	} else if kind == reflect.Float32 {
+		return uint64(val.(float32))
 	} else if kind == reflect.Float64 {
 		return uint64(val.(float64))
+	} else if kind == reflect.Int {
+		return uint64(val.(int))
+	} else if kind == reflect.Int8 {
+		return uint64(val.(int8))
+	} else if kind == reflect.Int16 {
+		return uint64(val.(int16))
+	} else if kind == reflect.Int32 {
+		return uint64(val.(int32))
+	} else if kind == reflect.Int64 {
+		return uint64(val.(int64))
+	} else if kind == reflect.Uint8 {
+		return uint64(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return uint64(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return uint64(val.(uint32))
 	} else if kind == reflect.Uint64 {
 		return val.(uint64)
 	} else {

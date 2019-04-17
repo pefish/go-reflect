@@ -41,7 +41,57 @@ type BaseModel struct {
 
 func TestReflectClass_ToInt64(t *testing.T) {
 	a := `12`
-	if Reflect.ToInt64(a[0]) != 1 {
+	if Reflect.ToInt64(a) != 12 {
+		t.Error()
+	}
+
+	var b int = 12
+	if Reflect.ToInt64(b) != 12 {
+		t.Error()
+	}
+
+	var c int8 = 12
+	if Reflect.ToInt64(c) != 12 {
+		t.Error()
+	}
+
+	var d int16 = 12
+	if Reflect.ToInt64(d) != 12 {
+		t.Error()
+	}
+
+	var f int32 = 12
+	if Reflect.ToInt64(f) != 12 {
+		t.Error()
+	}
+
+	var g uint8 = 12
+	if Reflect.ToInt64(g) != 12 {
+		t.Error()
+	}
+
+	var h uint16 = 12
+	if Reflect.ToInt64(h) != 12 {
+		t.Error()
+	}
+
+	var i uint32 = 12
+	if Reflect.ToInt64(i) != 12 {
+		t.Error()
+	}
+
+	var j uint64 = 12
+	if Reflect.ToInt64(j) != 12 {
+		t.Error()
+	}
+
+	var k float32 = 12
+	if Reflect.ToInt64(k) != 12 {
+		t.Error()
+	}
+
+	var l float64 = 12
+	if Reflect.ToInt64(l) != 12 {
 		t.Error()
 	}
 }

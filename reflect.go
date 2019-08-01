@@ -1,4 +1,4 @@
-package p_reflect
+package go_reflect
 
 import (
 	"encoding/json"
@@ -99,6 +99,96 @@ func (this *ReflectClass) ToInt(val interface{}) int {
 	} else {
 		panic(errors.New(`convert not supported: ` + kind.String()))
 	}
+}
+
+func (this *ReflectClass) ToInt8(val interface{}) int8 {
+	kind := reflect.TypeOf(val).Kind()
+	if kind == reflect.String {
+		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		return int8(int_)
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return int8(1)
+		} else {
+			return int8(0)
+		}
+	} else if kind == reflect.Float32 {
+		return int8(val.(float32))
+	} else if kind == reflect.Float64 {
+		return int8(val.(float64))
+	} else if kind == reflect.Int {
+		return int8(val.(int))
+	} else if kind == reflect.Int8 {
+		return val.(int8)
+	} else if kind == reflect.Int16 {
+		return int8(val.(int16))
+	} else if kind == reflect.Int32 {
+		return int8(val.(int32))
+	} else if kind == reflect.Int64 {
+		return int8(val.(int64))
+	} else if kind == reflect.Uint {
+		return int8(val.(uint))
+	} else if kind == reflect.Uint8 {
+		return int8(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return int8(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return int8(val.(uint32))
+	} else if kind == reflect.Uint64 {
+		return int8(val.(uint64))
+	} else {
+		panic(errors.New(`convert not supported: ` + kind.String()))
+	}
+}
+
+func (this *ReflectClass) ToInt16(val interface{}) int16 {
+	kind := reflect.TypeOf(val).Kind()
+	if kind == reflect.String {
+		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		return int16(int_)
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return int16(1)
+		} else {
+			return int16(0)
+		}
+	} else if kind == reflect.Float32 {
+		return int16(val.(float32))
+	} else if kind == reflect.Float64 {
+		return int16(val.(float64))
+	} else if kind == reflect.Int {
+		return int16(val.(int))
+	} else if kind == reflect.Int8 {
+		return int16(val.(int8))
+	} else if kind == reflect.Int16 {
+		return val.(int16)
+	} else if kind == reflect.Int32 {
+		return int16(val.(int32))
+	} else if kind == reflect.Int64 {
+		return int16(val.(int64))
+	} else if kind == reflect.Uint {
+		return int16(val.(uint))
+	} else if kind == reflect.Uint8 {
+		return int16(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return int16(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return int16(val.(uint32))
+	} else if kind == reflect.Uint64 {
+		return int16(val.(uint64))
+	} else {
+		panic(errors.New(`convert not supported: ` + kind.String()))
+	}
+}
+
+func (this *ReflectClass) ToBool(val interface{}) bool {
+	return val.(bool)
 }
 
 func (this *ReflectClass) ToInt32(val interface{}) int32 {
@@ -229,6 +319,137 @@ func (this *ReflectClass) ToUint64(val interface{}) uint64 {
 		panic(errors.New(`convert not supported: ` + kind.String()))
 	}
 }
+
+func (this *ReflectClass) ToUint32(val interface{}) uint32 {
+	kind := reflect.TypeOf(val).Kind()
+	if kind == reflect.String {
+		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		return uint32(int_)
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return uint32(1)
+		} else {
+			return uint32(0)
+		}
+	} else if kind == reflect.Float32 {
+		return uint32(val.(float32))
+	} else if kind == reflect.Float64 {
+		return uint32(val.(float64))
+	} else if kind == reflect.Int {
+		return uint32(val.(int))
+	} else if kind == reflect.Int8 {
+		return uint32(val.(int8))
+	} else if kind == reflect.Int16 {
+		return uint32(val.(int16))
+	} else if kind == reflect.Int32 {
+		return uint32(val.(int32))
+	} else if kind == reflect.Int64 {
+		return uint32(val.(int64))
+	} else if kind == reflect.Uint {
+		return uint32(val.(uint))
+	} else if kind == reflect.Uint8 {
+		return uint32(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return uint32(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return val.(uint32)
+	} else if kind == reflect.Uint64 {
+		return uint32(val.(uint64))
+	} else {
+		panic(errors.New(`convert not supported: ` + kind.String()))
+	}
+}
+
+
+func (this *ReflectClass) ToFloat64(val interface{}) float64 {
+	kind := reflect.TypeOf(val).Kind()
+	if kind == reflect.String {
+		result, err := strconv.ParseFloat(val.(string), 64)
+		if err != nil {
+			panic(err)
+		}
+		return result
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return float64(1)
+		} else {
+			return float64(0)
+		}
+	} else if kind == reflect.Float32 {
+		return float64(val.(float32))
+	} else if kind == reflect.Float64 {
+		return val.(float64)
+	} else if kind == reflect.Int {
+		return float64(val.(int))
+	} else if kind == reflect.Int8 {
+		return float64(val.(int8))
+	} else if kind == reflect.Int16 {
+		return float64(val.(int16))
+	} else if kind == reflect.Int32 {
+		return float64(val.(int32))
+	} else if kind == reflect.Int64 {
+		return float64(val.(int64))
+	} else if kind == reflect.Uint {
+		return float64(val.(uint))
+	} else if kind == reflect.Uint8 {
+		return float64(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return float64(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return float64(val.(uint32))
+	} else if kind == reflect.Uint64 {
+		return float64(val.(uint64))
+	} else {
+		panic(errors.New(`convert not supported: ` + kind.String()))
+	}
+}
+
+func (this *ReflectClass) ToFloat32(val interface{}) float32 {
+	kind := reflect.TypeOf(val).Kind()
+	if kind == reflect.String {
+		result, err := strconv.ParseFloat(val.(string), 64)
+		if err != nil {
+			panic(err)
+		}
+		return float32(result)
+	} else if kind == reflect.Bool {
+		if val.(bool) {
+			return float32(1)
+		} else {
+			return float32(0)
+		}
+	} else if kind == reflect.Float32 {
+		return val.(float32)
+	} else if kind == reflect.Float64 {
+		return float32(val.(float64))
+	} else if kind == reflect.Int {
+		return float32(val.(int))
+	} else if kind == reflect.Int8 {
+		return float32(val.(int8))
+	} else if kind == reflect.Int16 {
+		return float32(val.(int16))
+	} else if kind == reflect.Int32 {
+		return float32(val.(int32))
+	} else if kind == reflect.Int64 {
+		return float32(val.(int64))
+	} else if kind == reflect.Uint {
+		return float32(val.(uint))
+	} else if kind == reflect.Uint8 {
+		return float32(val.(uint8))
+	} else if kind == reflect.Uint16 {
+		return float32(val.(uint16))
+	} else if kind == reflect.Uint32 {
+		return float32(val.(uint32))
+	} else if kind == reflect.Uint64 {
+		return float32(val.(uint64))
+	} else {
+		panic(errors.New(`convert not supported: ` + kind.String()))
+	}
+}
+
 
 func (this *ReflectClass) ToString(val interface{}) string {
 	if val == nil {

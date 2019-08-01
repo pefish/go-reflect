@@ -1,4 +1,4 @@
-package p_reflect
+package go_reflect
 
 import (
 	"fmt"

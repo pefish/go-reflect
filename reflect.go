@@ -59,6 +59,10 @@ func (this *ReflectClass) getValuesInTagFromStruct(result []string, type_ reflec
 }
 
 func (this *ReflectClass) ToInt(val interface{}) int {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to int`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
@@ -102,6 +106,10 @@ func (this *ReflectClass) ToInt(val interface{}) int {
 }
 
 func (this *ReflectClass) ToInt8(val interface{}) int8 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to int8`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
@@ -145,6 +153,10 @@ func (this *ReflectClass) ToInt8(val interface{}) int8 {
 }
 
 func (this *ReflectClass) ToInt16(val interface{}) int16 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to int16`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
@@ -188,10 +200,18 @@ func (this *ReflectClass) ToInt16(val interface{}) int16 {
 }
 
 func (this *ReflectClass) ToBool(val interface{}) bool {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to bool`))
+	}
+
 	return val.(bool)
 }
 
 func (this *ReflectClass) ToInt32(val interface{}) int32 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to int32`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseInt(val.(string), 10, 64)
@@ -235,6 +255,10 @@ func (this *ReflectClass) ToInt32(val interface{}) int32 {
 }
 
 func (this *ReflectClass) ToInt64(val interface{}) int64 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to int64`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseInt(val.(string), 10, 64)
@@ -278,6 +302,10 @@ func (this *ReflectClass) ToInt64(val interface{}) int64 {
 }
 
 func (this *ReflectClass) ToUint64(val interface{}) uint64 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to uint64`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
@@ -321,6 +349,10 @@ func (this *ReflectClass) ToUint64(val interface{}) uint64 {
 }
 
 func (this *ReflectClass) ToUint32(val interface{}) uint32 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to uint32`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		int_, err := strconv.ParseUint(val.(string), 10, 64)
@@ -365,6 +397,10 @@ func (this *ReflectClass) ToUint32(val interface{}) uint32 {
 
 
 func (this *ReflectClass) ToFloat64(val interface{}) float64 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to float64`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		result, err := strconv.ParseFloat(val.(string), 64)
@@ -408,6 +444,10 @@ func (this *ReflectClass) ToFloat64(val interface{}) float64 {
 }
 
 func (this *ReflectClass) ToFloat32(val interface{}) float32 {
+	if val == nil {
+		panic(errors.New(`nil cannot convert to float32`))
+	}
+
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
 		result, err := strconv.ParseFloat(val.(string), 64)
@@ -453,7 +493,7 @@ func (this *ReflectClass) ToFloat32(val interface{}) float32 {
 
 func (this *ReflectClass) ToString(val interface{}) string {
 	if val == nil {
-		return `nil`
+		panic(errors.New(`nil cannot convert to string`))
 	}
 	type_ := reflect.TypeOf(val)
 	kind := type_.Kind()

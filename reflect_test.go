@@ -40,8 +40,8 @@ type BaseModel struct {
 }
 
 func TestReflectClass_ToInt64(t *testing.T) {
-	a := `12`
-	if Reflect.ToInt64(a) != 12 {
+	a := `1222222`
+	if Reflect.ToInt64(a) != 1222222 {
 		t.Error()
 	}
 
@@ -97,6 +97,73 @@ func TestReflectClass_ToInt64(t *testing.T) {
 
 	var m bool = true
 	if Reflect.ToInt64(m) != 1 {
+		t.Error()
+	}
+}
+
+func TestReflectClass_ToUint64(t *testing.T) {
+	map_ := map[string]interface{}{
+		`haha`: 342842799,
+	}
+	fmt.Println(fmt.Sprintf(`%v`, map_))
+
+	a := `1222222`
+	if Reflect.ToUint64(a) != 1222222 {
+		t.Error()
+	}
+
+	var b int = 12
+	if Reflect.ToUint64(b) != 12 {
+		t.Error()
+	}
+
+	var c int8 = 12
+	if Reflect.ToUint64(c) != 12 {
+		t.Error()
+	}
+
+	var d int16 = 12
+	if Reflect.ToUint64(d) != 12 {
+		t.Error()
+	}
+
+	var f int32 = 12
+	if Reflect.ToUint64(f) != 12 {
+		t.Error()
+	}
+
+	var g uint8 = 12
+	if Reflect.ToUint64(g) != 12 {
+		t.Error()
+	}
+
+	var h uint16 = 12
+	if Reflect.ToUint64(h) != 12 {
+		t.Error()
+	}
+
+	var i uint32 = 12
+	if Reflect.ToUint64(i) != 12 {
+		t.Error()
+	}
+
+	var j uint64 = 12
+	if Reflect.ToUint64(j) != 12 {
+		t.Error()
+	}
+
+	var k float32 = 12
+	if Reflect.ToUint64(k) != 12 {
+		t.Error()
+	}
+
+	var l float64 = 12
+	if Reflect.ToUint64(l) != 12 {
+		t.Error()
+	}
+
+	var m bool = true
+	if Reflect.ToUint64(m) != 1 {
 		t.Error()
 	}
 }

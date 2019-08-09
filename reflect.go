@@ -204,7 +204,16 @@ func (this *ReflectClass) ToBool(val interface{}) bool {
 		panic(errors.New(`nil cannot convert to bool`))
 	}
 
-	return val.(bool)
+	kind := reflect.TypeOf(val).Kind()
+	if kind == reflect.String {
+		bool_, err := strconv.ParseBool(val.(string))
+		if err != nil {
+			panic(err)
+		}
+		return bool_
+	} else {
+		panic(errors.New(`convert not supported: ` + kind.String()))
+	}
 }
 
 func (this *ReflectClass) ToInt32(val interface{}) int32 {

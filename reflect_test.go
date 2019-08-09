@@ -228,3 +228,7 @@ func TestReflectClass_GetValuesInTagFromStruct(t *testing.T) {
 	//}
 }
 
+func TestReflectClass_ToBool(t *testing.T) {
+	a := `true`
+	fmt.Println(Reflect.ToBool(a))
+}

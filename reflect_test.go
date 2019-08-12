@@ -1,6 +1,7 @@
 package go_reflect
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 )
@@ -169,6 +170,12 @@ func TestReflectClass_ToUint64(t *testing.T) {
 }
 
 func TestReflectClass_ToString(t *testing.T) {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Printf(Reflect.ToString(err))
+		}
+	}()
+
 	var a *float64
 	b := 0.34
 	a = &b
@@ -191,6 +198,12 @@ func TestReflectClass_ToString(t *testing.T) {
 	}
 	test := Test{}
 	fmt.Println(Reflect.ToString(test.Test1))
+
+
+	fmt.Println(Reflect.ToString(errors.New(`111`)))
+
+	var c interface{} = `1`
+	fmt.Println(c.(int))
 }
 
 func TestReflectClass_GetValuesInTagFromStruct(t *testing.T) {

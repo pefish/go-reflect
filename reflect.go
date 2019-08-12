@@ -1,10 +1,9 @@
 package go_reflect
 
 import (
-	"encoding/json"
 	"errors"
+	"fmt"
 	"reflect"
-	"runtime"
 	"strconv"
 	"time"
 )
@@ -545,14 +544,6 @@ func (this *ReflectClass) ToString(val interface{}) string {
 		}
 		return this.ToString(reflectVal.Elem().Interface())
 	} else {
-		if typeStr_ == `runtime.TypeAssertionError` {
-			err := val.(runtime.TypeAssertionError)
-			return err.Error()
-		}
-		result, err := json.Marshal(val)
-		if err != nil {
-			panic(err)
-		}
-		return string(result)
+		return fmt.Sprintf(`%#v`, val)
 	}
 }

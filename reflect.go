@@ -544,6 +544,6 @@ func (this *ReflectClass) ToString(val interface{}) string {
 		}
 		return this.ToString(reflectVal.Elem().Interface())
 	} else {
-		return fmt.Sprintf(`%#v`, val)
+		return fmt.Sprint(val)
 	}
 }

@@ -42,62 +42,62 @@ type BaseModel struct {
 
 func TestReflectClass_ToInt64(t *testing.T) {
 	a := `1222222`
-	if Reflect.ToInt64(a) != 1222222 {
+	if Reflect.MustToInt64(a) != 1222222 {
 		t.Error()
 	}
 
 	var b int = 12
-	if Reflect.ToInt64(b) != 12 {
+	if Reflect.MustToInt64(b) != 12 {
 		t.Error()
 	}
 
 	var c int8 = 12
-	if Reflect.ToInt64(c) != 12 {
+	if Reflect.MustToInt64(c) != 12 {
 		t.Error()
 	}
 
 	var d int16 = 12
-	if Reflect.ToInt64(d) != 12 {
+	if Reflect.MustToInt64(d) != 12 {
 		t.Error()
 	}
 
 	var f int32 = 12
-	if Reflect.ToInt64(f) != 12 {
+	if Reflect.MustToInt64(f) != 12 {
 		t.Error()
 	}
 
 	var g uint8 = 12
-	if Reflect.ToInt64(g) != 12 {
+	if Reflect.MustToInt64(g) != 12 {
 		t.Error()
 	}
 
 	var h uint16 = 12
-	if Reflect.ToInt64(h) != 12 {
+	if Reflect.MustToInt64(h) != 12 {
 		t.Error()
 	}
 
 	var i uint32 = 12
-	if Reflect.ToInt64(i) != 12 {
+	if Reflect.MustToInt64(i) != 12 {
 		t.Error()
 	}
 
 	var j uint64 = 12
-	if Reflect.ToInt64(j) != 12 {
+	if Reflect.MustToInt64(j) != 12 {
 		t.Error()
 	}
 
 	var k float32 = 12
-	if Reflect.ToInt64(k) != 12 {
+	if Reflect.MustToInt64(k) != 12 {
 		t.Error()
 	}
 
 	var l float64 = 12
-	if Reflect.ToInt64(l) != 12 {
+	if Reflect.MustToInt64(l) != 12 {
 		t.Error()
 	}
 
 	var m bool = true
-	if Reflect.ToInt64(m) != 1 {
+	if Reflect.MustToInt64(m) != 1 {
 		t.Error()
 	}
 }
@@ -109,62 +109,62 @@ func TestReflectClass_ToUint64(t *testing.T) {
 	fmt.Println(fmt.Sprintf(`%v`, map_))
 
 	a := `1222222`
-	if Reflect.ToUint64(a) != 1222222 {
+	if Reflect.MustToUint64(a) != 1222222 {
 		t.Error()
 	}
 
 	var b int = 12
-	if Reflect.ToUint64(b) != 12 {
+	if Reflect.MustToUint64(b) != 12 {
 		t.Error()
 	}
 
 	var c int8 = 12
-	if Reflect.ToUint64(c) != 12 {
+	if Reflect.MustToUint64(c) != 12 {
 		t.Error()
 	}
 
 	var d int16 = 12
-	if Reflect.ToUint64(d) != 12 {
+	if Reflect.MustToUint64(d) != 12 {
 		t.Error()
 	}
 
 	var f int32 = 12
-	if Reflect.ToUint64(f) != 12 {
+	if Reflect.MustToUint64(f) != 12 {
 		t.Error()
 	}
 
 	var g uint8 = 12
-	if Reflect.ToUint64(g) != 12 {
+	if Reflect.MustToUint64(g) != 12 {
 		t.Error()
 	}
 
 	var h uint16 = 12
-	if Reflect.ToUint64(h) != 12 {
+	if Reflect.MustToUint64(h) != 12 {
 		t.Error()
 	}
 
 	var i uint32 = 12
-	if Reflect.ToUint64(i) != 12 {
+	if Reflect.MustToUint64(i) != 12 {
 		t.Error()
 	}
 
 	var j uint64 = 12
-	if Reflect.ToUint64(j) != 12 {
+	if Reflect.MustToUint64(j) != 12 {
 		t.Error()
 	}
 
 	var k float32 = 12
-	if Reflect.ToUint64(k) != 12 {
+	if Reflect.MustToUint64(k) != 12 {
 		t.Error()
 	}
 
 	var l float64 = 12
-	if Reflect.ToUint64(l) != 12 {
+	if Reflect.MustToUint64(l) != 12 {
 		t.Error()
 	}
 
 	var m bool = true
-	if Reflect.ToUint64(m) != 1 {
+	if Reflect.MustToUint64(m) != 1 {
 		t.Error()
 	}
 }
@@ -172,14 +172,14 @@ func TestReflectClass_ToUint64(t *testing.T) {
 func TestReflectClass_ToString(t *testing.T) {
 	defer func() {
 		if err := recover(); err != nil {
-			fmt.Printf(Reflect.ToString(err))
+			fmt.Printf(Reflect.MustToString(err))
 		}
 	}()
 
 	var a *float64
 	b := 0.34
 	a = &b
-	if Reflect.ToString(a) != `0.34` {
+	if Reflect.MustToString(a) != `0.34` {
 		t.Error()
 	}
 

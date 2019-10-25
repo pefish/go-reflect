@@ -187,6 +187,8 @@ func (this *ReflectClass) ToBool(val interface{}) (bool, error) {
 			return false, err
 		}
 		return bool_, nil
+	} else if kind == reflect.Bool {
+		return val.(bool), nil
 	} else {
 		return false, errors.New(`convert not supported: ` + kind.String())
 	}

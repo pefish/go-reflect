@@ -525,60 +525,51 @@ func (this *ReflectClass) ToFloat32(val interface{}) (float32, error) {
 	}
 }
 
-
-func (this *ReflectClass) MustToString(val interface{}) string {
-	str, err := this.ToString(val)
-	if err != nil {
-		panic(err)
-	}
-	return str
-}
-
-func (this *ReflectClass) ToString(val interface{}) (string, error) {
+func (this *ReflectClass) ToString(val interface{}) string {
 	if val == nil {
-		return ``, errors.New(`nil cannot convert to string`)
+		return `nil`
 	}
 	type_ := reflect.TypeOf(val)
 	kind := type_.Kind()
 	typeStr_ := type_.String()
 	if kind == reflect.String {
-		return val.(string), nil
+		return val.(string)
 	} else if kind == reflect.Bool {
-		return strconv.FormatBool(val.(bool)), nil
+		return strconv.FormatBool(val.(bool))
 	} else if kind == reflect.Float32 {
-		return strconv.FormatFloat(float64(val.(float32)), 'f', -1, 64), nil
+		return strconv.FormatFloat(float64(val.(float32)), 'f', -1, 64)
 	} else if kind == reflect.Float64 {
-		return strconv.FormatFloat(val.(float64), 'f', -1, 64), nil
+		return strconv.FormatFloat(val.(float64), 'f', -1, 64)
 	} else if kind == reflect.Int {
-		return strconv.FormatInt(int64(val.(int)), 10), nil
+		return strconv.FormatInt(int64(val.(int)), 10)
 	} else if kind == reflect.Int8 {
-		return strconv.FormatInt(int64(val.(int8)), 10), nil
+		return strconv.FormatInt(int64(val.(int8)), 10)
 	} else if kind == reflect.Int16 {
-		return strconv.FormatInt(int64(val.(int16)), 10), nil
+		return strconv.FormatInt(int64(val.(int16)), 10)
 	} else if kind == reflect.Int32 {
-		return strconv.FormatInt(int64(val.(int32)), 10), nil
+		return strconv.FormatInt(int64(val.(int32)), 10)
 	} else if kind == reflect.Int64 {
 		if typeStr_ == `time.Duration` {
-			return strconv.FormatInt(int64(val.(time.Duration)), 10), nil
+			return strconv.FormatInt(int64(val.(time.Duration)), 10)
 		}
-		return strconv.FormatInt(val.(int64), 10), nil
+		return strconv.FormatInt(val.(int64), 10)
 	} else if kind == reflect.Uint {
-		return strconv.FormatUint(uint64(val.(uint)), 10), nil
+		return strconv.FormatUint(uint64(val.(uint)), 10)
 	} else if kind == reflect.Uint8 {
-		return strconv.FormatInt(int64(val.(uint8)), 10), nil
+		return strconv.FormatInt(int64(val.(uint8)), 10)
 	} else if kind == reflect.Uint16 {
-		return strconv.FormatUint(uint64(val.(uint16)), 10), nil
+		return strconv.FormatUint(uint64(val.(uint16)), 10)
 	} else if kind == reflect.Uint32 {
-		return strconv.FormatUint(uint64(val.(uint32)), 10), nil
+		return strconv.FormatUint(uint64(val.(uint32)), 10)
 	} else if kind == reflect.Uint64 {
-		return strconv.FormatUint(val.(uint64), 10), nil
+		return strconv.FormatUint(val.(uint64), 10)
 	} else if kind == reflect.Ptr {
 		reflectVal := reflect.ValueOf(val)
 		if reflectVal.IsNil() { // IsNil 只接受 chan, func, interface, map, pointer, or slice value
-			return `*nil`, nil
+			return `*nil`
 		}
 		return this.ToString(reflectVal.Elem().Interface())
 	} else {
-		return fmt.Sprint(val), nil
+		return fmt.Sprint(val)
 	}
 }

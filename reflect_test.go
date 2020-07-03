@@ -1,247 +1,194 @@
 package go_reflect
 
 import (
-	"errors"
 	"fmt"
+	"github.com/pefish/go-test-assert"
 	"testing"
 )
 
-type C2cOrder struct {
-	UserId             uint64  `db:"user_id" json:"user_id"`
-	Type               uint64  `db:"type" json:"type"`
-	OrderNumber        string  `db:"order_number" json:"order_number"`
-	Price              float64 `db:"price" json:"price"`
-	Amount             float64 `db:"amount" json:"amount"`
-	TransferMemo       string  `db:"tranfer_memo" json:"tranfer_memo"`
-	Status             uint64  `db:"status" json:"status"`
-	PayerId            uint64  `db:"payer_id" json:"payer_id"`
-	PayerName          string  `db:"payer_name" json:"payer_name"`
-	PayerBankName      string  `db:"payer_bank_name" json:"payer_bank_name"`
-	PayerBranchName    string  `db:"payer_branch_name" json:"payer_branch_name"`
-	PayerBankNumber    string  `db:"payer_bank_number" json:"payer_bank_number"`
-	ReceiverId         string  `db:"receiver_id" json:"receiver_id"`
-	ReceiverName       string  `db:"receiver_name" json:"receiver_name"`
-	ReceiverBankName   string  `db:"receiver_bank_name" json:"receiver_bank_name"`
-	ReceiverBranchName string  `db:"receiver_branch_name" json:"receiver_branch_name"`
-	ReceiverBankNumber string  `db:"receiver_bank_number" json:"receiver_bank_number"`
-	RejectReason       *string `db:"reject_reason" json:"reject_reason"`
-	PayCoinAt          *string `db:"pay_coin_at" json:"pay_coin_at"`
-	ReceiveCoinAt      *string `db:"receive_coin_at" json:"receive_coin_at"`
-	RejectAt           *string `db:"reject_at" json:"reject_at"`
-	FreezeUid          *string `db:"freeze_uid" json:"freeze_uid"`
-	ExpiredAt          *string `db:"expired_at" json:"expired_at"`
+type Test struct {
+	UserId             uint64  `json:"user_id"`
+	Type               uint64  `json:"type"`
+	OrderNumber        string  `json:"order_number"`
+	Price              float64 `json:"price"`
+	Amount             float64 `json:"amount"`
+	TransferMemo       string  `json:"tranfer_memo"`
+	Status             uint64  `json:"status"`
 
 	BaseModel
 }
 
 type BaseModel struct {
-	Id        uint64 `db:"id" json:"id"`
-	CreatedAt string `db:"created_at" json:"created_at"`
-	UpdatedAt string `db:"updated_at" json:"updated_at"`
+	Id        uint64 `json:"id"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
-func TestReflectClass_ToInt64(t *testing.T) {
+func TestReflectClass_MustToInt64(t *testing.T) {
 	a := `1222222`
-	if Reflect.MustToInt64(a) != 1222222 {
-		t.Error()
-	}
+	test.Equal(t, int64(1222222), Reflect.MustToInt64(a))
 
 	var b int = 12
-	if Reflect.MustToInt64(b) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(b))
 
 	var c int8 = 12
-	if Reflect.MustToInt64(c) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(c))
 
 	var d int16 = 12
-	if Reflect.MustToInt64(d) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(d))
 
 	var f int32 = 12
-	if Reflect.MustToInt64(f) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(f))
 
 	var g uint8 = 12
-	if Reflect.MustToInt64(g) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(g))
 
 	var h uint16 = 12
-	if Reflect.MustToInt64(h) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(h))
 
 	var i uint32 = 12
-	if Reflect.MustToInt64(i) != 12 {
-		t.Error()
-	}
-
-	var j uint64 = 12
-	if Reflect.MustToInt64(j) != 12 {
-		t.Error()
-	}
-
-	var k float32 = 12
-	if Reflect.MustToInt64(k) != 12 {
-		t.Error()
-	}
-
-	var l float64 = 12
-	if Reflect.MustToInt64(l) != 12 {
-		t.Error()
-	}
+	test.Equal(t, int64(12), Reflect.MustToInt64(i))
 
 	var m bool = true
-	if Reflect.MustToInt64(m) != 1 {
-		t.Error()
-	}
+	test.Equal(t, int64(1), Reflect.MustToInt64(m))
+
+	m_, err := Reflect.ToInt64(m)
+	test.Equal(t, nil, err)
+	test.Equal(t, int64(1), m_)
+
 }
 
-func TestReflectClass_ToUint64(t *testing.T) {
-	map_ := map[string]interface{}{
-		`haha`: 342842799,
-	}
-	fmt.Println(fmt.Sprintf(`%v`, map_))
-
+func TestReflectClass_MustToUint64(t *testing.T) {
 	a := `1222222`
-	if Reflect.MustToUint64(a) != 1222222 {
-		t.Error()
-	}
+	test.Equal(t, uint64(1222222), Reflect.MustToUint64(a))
 
 	var b int = 12
-	if Reflect.MustToUint64(b) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(b))
 
 	var c int8 = 12
-	if Reflect.MustToUint64(c) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(c))
 
 	var d int16 = 12
-	if Reflect.MustToUint64(d) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(d))
 
 	var f int32 = 12
-	if Reflect.MustToUint64(f) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(f))
 
 	var g uint8 = 12
-	if Reflect.MustToUint64(g) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(g))
 
 	var h uint16 = 12
-	if Reflect.MustToUint64(h) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(h))
 
 	var i uint32 = 12
-	if Reflect.MustToUint64(i) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(i))
 
 	var j uint64 = 12
-	if Reflect.MustToUint64(j) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(j))
 
 	var k float32 = 12
-	if Reflect.MustToUint64(k) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(k))
 
 	var l float64 = 12
-	if Reflect.MustToUint64(l) != 12 {
-		t.Error()
-	}
+	test.Equal(t, uint64(12), Reflect.MustToUint64(l))
 
 	var m bool = true
-	if Reflect.MustToUint64(m) != 1 {
-		t.Error()
-	}
+	test.Equal(t, uint64(1), Reflect.MustToUint64(m))
+
+	var n string = "0xc00007a000"
+	test.Equal(t, uint64(824634220544), Reflect.MustToUint64(n))
+
+	m_, err := Reflect.ToUint64(n)
+	test.Equal(t, nil, err)
+	test.Equal(t, uint64(824634220544), m_)
 }
 
 func TestReflectClass_ToString(t *testing.T) {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Printf(Reflect.MustToString(err))
-		}
-	}()
-
 	var a *float64
 	b := 0.34
 	a = &b
-	if Reflect.MustToString(a) != `0.34` {
-		t.Error()
-	}
+	test.Equal(t, "0.34", Reflect.ToString(a))
 
 	type BType struct {
 		B1 int
 	}
-
 	a1 := struct {
 		A string
 		B BType
 	}{`1`, BType{2}}
-	fmt.Println(Reflect.ToString(a1))
+	test.Equal(t, "{1 {2}}", Reflect.ToString(a1))
 
 	type Test struct {
 		Test1 *string `json:"test1"`
 	}
-	test := Test{}
-	fmt.Println(Reflect.ToString(test.Test1))
+	test_ := Test{}
+	test.Equal(t, "*nil", Reflect.ToString(test_.Test1))
 
+	a2 := 625462456
+	test.Equal(t, "625462456", Reflect.ToString(a2))
 
-	fmt.Println(Reflect.ToString(errors.New(`111`)))
-
-	var c interface{} = `1`
-	fmt.Println(c.(int))
+	a3 := 0xf43f2
+	test.Equal(t, "1000434", Reflect.ToString(a3))
 }
 
 func TestReflectClass_GetValuesInTagFromStruct(t *testing.T) {
 	// []*Test{}
-	test := []*C2cOrder{}
-	fields := Reflect.GetValuesInTagFromStruct(test, `json`)
-	fmt.Println(fields)
+	test_ := []*Test{}
+	fields := Reflect.GetValuesInTagFromStruct(test_, `json`)
+	test.Equal(t, "[user_id type order_number price amount tranfer_memo status id created_at updated_at]", fmt.Sprint(fields))
 
 	// Test{}
-	//test1 := C2cOrder{}
-	//fields = Reflect.GetValuesInTagFromStruct(test1, `json`)
-	//if len(fields) != 23 {
-	//	t.Error()
-	//}
+	test1 := Test{}
+	fields = Reflect.GetValuesInTagFromStruct(test1, `json`)
+	test.Equal(t, "[user_id type order_number price amount tranfer_memo status id created_at updated_at]", fmt.Sprint(fields))
 
 	// *Test{}
-	//test2 := C2cOrder{}
-	//fields = Reflect.GetValuesInTagFromStruct(&test2, `json`)
-	//if len(fields) != 23 {
-	//	t.Error()
-	//}
+	test2 := Test{}
+	fields = Reflect.GetValuesInTagFromStruct(&test2, `json`)
+	test.Equal(t, "[user_id type order_number price amount tranfer_memo status id created_at updated_at]", fmt.Sprint(fields))
 
 	// []Test{}
-	//test3 := []C2cOrder{}
-	//fields = Reflect.GetValuesInTagFromStruct(test3, `json`)
-	//if len(fields) != 23 {
-	//	t.Error()
-	//}
+	test3 := []Test{}
+	fields = Reflect.GetValuesInTagFromStruct(test3, `json`)
+	test.Equal(t, "[user_id type order_number price amount tranfer_memo status id created_at updated_at]", fmt.Sprint(fields))
 
 	// *[]Test{}
-	//test4 := []C2cOrder{}
-	//fields = Reflect.GetValuesInTagFromStruct(&test4, `json`)
-	//if len(fields) != 23 {
-	//	t.Error()
-	//}
+	test4 := []Test{}
+	fields = Reflect.GetValuesInTagFromStruct(&test4, `json`)
+	test.Equal(t, "[user_id type order_number price amount tranfer_memo status id created_at updated_at]", fmt.Sprint(fields))
 }
 
-func TestReflectClass_ToBool(t *testing.T) {
+func TestReflectClass_MustToBool(t *testing.T) {
 	a := `true`
-	fmt.Println(Reflect.ToBool(a))
+	test.Equal(t, true, Reflect.MustToBool(a))
+}
+
+func TestReflectClass_MustToInt(t *testing.T) {
+	a := "4546"
+	test.Equal(t, 4546, Reflect.MustToInt(a))
+}
+
+func TestReflectClass_MustToInt8(t *testing.T) {
+	a := "12"
+	test.Equal(t, int8(12), Reflect.MustToInt8(a))
+}
+
+func TestReflectClass_MustToInt32(t *testing.T) {
+	a := "4546"
+	test.Equal(t, int32(4546), Reflect.MustToInt32(a))
+}
+
+func TestReflectClass_MustToUint32(t *testing.T) {
+	a := "4546"
+	test.Equal(t, uint32(4546), Reflect.MustToUint32(a))
+}
+
+func TestReflectClass_MustToFloat64(t *testing.T) {
+	a := "4546.3526"
+	test.Equal(t, 4546.3526, Reflect.MustToFloat64(a))
+}
+
+func TestReflectClass_MustToFloat32(t *testing.T) {
+	a := "4546.3526"
+	test.Equal(t, float32(4546.3526), Reflect.MustToFloat32(a))
 }

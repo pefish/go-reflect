@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -17,12 +18,12 @@ var Reflect = ReflectClass{}
 /**
 通过反射获取指针中struct的所有tag值. 支持 []*Test{}、Test{}、*Test{}、[]Test{}、*[]Test{}
  */
-func (this *ReflectClass) GetValuesInTagFromStruct(interf interface{}, tag string) []string  {
-	result := []string{}
-	return this.getValuesInTagFromStruct(result, reflect.TypeOf(interf), tag)
+func (reflectInstance *ReflectClass) GetValuesInTagFromStruct(interf interface{}, tag string) []string  {
+	result := make([]string, 0)
+	return reflectInstance.getValuesInTagFromStruct(result, reflect.TypeOf(interf), tag)
 }
 
-func (this *ReflectClass) getValuesInTagFromStruct(result []string, type_ reflect.Type, tag string) []string {
+func (reflectInstance *ReflectClass) getValuesInTagFromStruct(result []string, type_ reflect.Type, tag string) []string {
 	realValKind := type_.Kind()
 	if realValKind == reflect.Ptr {
 		type_ = type_.Elem()
@@ -50,22 +51,22 @@ func (this *ReflectClass) getValuesInTagFromStruct(result []string, type_ reflec
 			if tagName != `` {
 				result = append(result, type_.Field(i).Tag.Get(tag))
 			}
-			result = this.getValuesInTagFromStruct(result, type_.Field(i).Type, tag)
+			result = reflectInstance.getValuesInTagFromStruct(result, type_.Field(i).Type, tag)
 		}
 	}
 
 	return result
 }
 
-func (this *ReflectClass) MustToInt(val interface{}) int {
-	result, err := this.ToInt(val)
+func (reflectInstance *ReflectClass) MustToInt(val interface{}) int {
+	result, err := reflectInstance.ToInt(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToInt(val interface{}) (int, error) {
+func (reflectInstance *ReflectClass) ToInt(val interface{}) (int, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to int`)
 	}
@@ -112,15 +113,15 @@ func (this *ReflectClass) ToInt(val interface{}) (int, error) {
 	}
 }
 
-func (this *ReflectClass) MustToInt8(val interface{}) int8 {
-	result, err := this.ToInt8(val)
+func (reflectInstance *ReflectClass) MustToInt8(val interface{}) int8 {
+	result, err := reflectInstance.ToInt8(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToInt8(val interface{}) (int8, error) {
+func (reflectInstance *ReflectClass) ToInt8(val interface{}) (int8, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to int8`)
 	}
@@ -167,15 +168,15 @@ func (this *ReflectClass) ToInt8(val interface{}) (int8, error) {
 	}
 }
 
-func (this *ReflectClass) MustToBool(val interface{}) bool {
-	result, err := this.ToBool(val)
+func (reflectInstance *ReflectClass) MustToBool(val interface{}) bool {
+	result, err := reflectInstance.ToBool(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToBool(val interface{}) (bool, error) {
+func (reflectInstance *ReflectClass) ToBool(val interface{}) (bool, error) {
 	if val == nil {
 		return false, errors.New(`nil cannot convert to bool`)
 	}
@@ -194,15 +195,15 @@ func (this *ReflectClass) ToBool(val interface{}) (bool, error) {
 	}
 }
 
-func (this *ReflectClass) MustToInt32(val interface{}) int32 {
-	result, err := this.ToInt32(val)
+func (reflectInstance *ReflectClass) MustToInt32(val interface{}) int32 {
+	result, err := reflectInstance.ToInt32(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToInt32(val interface{}) (int32, error) {
+func (reflectInstance *ReflectClass) ToInt32(val interface{}) (int32, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to int32`)
 	}
@@ -249,15 +250,15 @@ func (this *ReflectClass) ToInt32(val interface{}) (int32, error) {
 	}
 }
 
-func (this *ReflectClass) MustToInt64(val interface{}) int64 {
-	result, err := this.ToInt64(val)
+func (reflectInstance *ReflectClass) MustToInt64(val interface{}) int64 {
+	result, err := reflectInstance.ToInt64(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToInt64(val interface{}) (int64, error) {
+func (reflectInstance *ReflectClass) ToInt64(val interface{}) (int64, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to int64`)
 	}
@@ -305,22 +306,28 @@ func (this *ReflectClass) ToInt64(val interface{}) (int64, error) {
 }
 
 
-func (this *ReflectClass) MustToUint64(val interface{}) uint64 {
-	result, err := this.ToUint64(val)
+func (reflectInstance *ReflectClass) MustToUint64(val interface{}) uint64 {
+	result, err := reflectInstance.ToUint64(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToUint64(val interface{}) (uint64, error) {
+func (reflectInstance *ReflectClass) ToUint64(val interface{}) (uint64, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to uint64`)
 	}
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		base := 10
+		str := val.(string)
+		if strings.HasPrefix(str, "0x") {
+			base = 16
+			str = str[2:]
+		}
+		int_, err := strconv.ParseUint(str, base, 64)
 		if err != nil {
 			return 0, err
 		}
@@ -360,15 +367,15 @@ func (this *ReflectClass) ToUint64(val interface{}) (uint64, error) {
 	}
 }
 
-func (this *ReflectClass) MustToUint32(val interface{}) uint32 {
-	result, err := this.ToUint32(val)
+func (reflectInstance *ReflectClass) MustToUint32(val interface{}) uint32 {
+	result, err := reflectInstance.ToUint32(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToUint32(val interface{}) (uint32, error) {
+func (reflectInstance *ReflectClass) ToUint32(val interface{}) (uint32, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to uint32`)
 	}
@@ -415,15 +422,15 @@ func (this *ReflectClass) ToUint32(val interface{}) (uint32, error) {
 	}
 }
 
-func (this *ReflectClass) MustToFloat64(val interface{}) float64 {
-	result, err := this.ToFloat64(val)
+func (reflectInstance *ReflectClass) MustToFloat64(val interface{}) float64 {
+	result, err := reflectInstance.ToFloat64(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToFloat64(val interface{}) (float64, error) {
+func (reflectInstance *ReflectClass) ToFloat64(val interface{}) (float64, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to float64`)
 	}
@@ -470,15 +477,15 @@ func (this *ReflectClass) ToFloat64(val interface{}) (float64, error) {
 	}
 }
 
-func (this *ReflectClass) MustToFloat32(val interface{}) float32 {
-	result, err := this.ToFloat32(val)
+func (reflectInstance *ReflectClass) MustToFloat32(val interface{}) float32 {
+	result, err := reflectInstance.ToFloat32(val)
 	if err != nil {
 		panic(err)
 	}
 	return result
 }
 
-func (this *ReflectClass) ToFloat32(val interface{}) (float32, error) {
+func (reflectInstance *ReflectClass) ToFloat32(val interface{}) (float32, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to float32`)
 	}
@@ -525,7 +532,7 @@ func (this *ReflectClass) ToFloat32(val interface{}) (float32, error) {
 	}
 }
 
-func (this *ReflectClass) ToString(val interface{}) string {
+func (reflectInstance *ReflectClass) ToString(val interface{}) string {
 	if val == nil {
 		return `nil`
 	}
@@ -568,7 +575,7 @@ func (this *ReflectClass) ToString(val interface{}) string {
 		if reflectVal.IsNil() { // IsNil 只接受 chan, func, interface, map, pointer, or slice value
 			return `*nil`
 		}
-		return this.ToString(reflectVal.Elem().Interface())
+		return reflectInstance.ToString(reflectVal.Elem().Interface())
 	} else {
 		return fmt.Sprint(val)
 	}

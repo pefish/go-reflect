@@ -28,6 +28,13 @@ func TestReflectClass_MustToInt64(t *testing.T) {
 	a := `1222222`
 	test.Equal(t, int64(1222222), Reflect.MustToInt64(a))
 
+	a1 := `0x16`
+	test.Equal(t, int64(22), Reflect.MustToInt64(a1))
+	a2 := `0o17`
+	test.Equal(t, int64(15), Reflect.MustToInt64(a2))
+	a3 := `0b101`
+	test.Equal(t, int64(5), Reflect.MustToInt64(a3))
+
 	var b int = 12
 	test.Equal(t, int64(12), Reflect.MustToInt64(b))
 

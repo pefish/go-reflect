@@ -73,7 +73,8 @@ func (reflectInstance *ReflectClass) ToInt(val interface{}) (int, error) {
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		str, base := reflectInstance.findBase(val.(string))
+		int_, err := strconv.ParseUint(str, base, 64)
 		if err != nil {
 			return 0, err
 		}
@@ -128,7 +129,8 @@ func (reflectInstance *ReflectClass) ToInt8(val interface{}) (int8, error) {
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		str, base := reflectInstance.findBase(val.(string))
+		int_, err := strconv.ParseUint(str, base, 64)
 		if err != nil {
 			return 0, err
 		}
@@ -203,6 +205,21 @@ func (reflectInstance *ReflectClass) MustToInt32(val interface{}) int32 {
 	return result
 }
 
+func (reflectInstance *ReflectClass) findBase(str string) (string, int) {
+	base := 10
+	if strings.HasPrefix(str, "0x") {
+		base = 16
+		str = str[2:]
+	} else if strings.HasPrefix(str, "0o") {
+		base = 8
+		str = str[2:]
+	} else if strings.HasPrefix(str, "0b") {
+		base = 2
+		str = str[2:]
+	}
+	return str, base
+}
+
 func (reflectInstance *ReflectClass) ToInt32(val interface{}) (int32, error) {
 	if val == nil {
 		return 0, errors.New(`nil cannot convert to int32`)
@@ -210,7 +227,8 @@ func (reflectInstance *ReflectClass) ToInt32(val interface{}) (int32, error) {
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		int_, err := strconv.ParseInt(val.(string), 10, 64)
+		str, base := reflectInstance.findBase(val.(string))
+		int_, err := strconv.ParseInt(str, base, 64)
 		if err != nil {
 			return 0, err
 		}
@@ -265,7 +283,8 @@ func (reflectInstance *ReflectClass) ToInt64(val interface{}) (int64, error) {
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		int_, err := strconv.ParseInt(val.(string), 10, 64)
+		str, base := reflectInstance.findBase(val.(string))
+		int_, err := strconv.ParseInt(str, base, 64)
 		if err != nil {
 			return 0, err
 		}
@@ -321,12 +340,7 @@ func (reflectInstance *ReflectClass) ToUint64(val interface{}) (uint64, error) {
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		base := 10
-		str := val.(string)
-		if strings.HasPrefix(str, "0x") {
-			base = 16
-			str = str[2:]
-		}
+		str, base := reflectInstance.findBase(val.(string))
 		int_, err := strconv.ParseUint(str, base, 64)
 		if err != nil {
 			return 0, err
@@ -382,7 +396,8 @@ func (reflectInstance *ReflectClass) ToUint32(val interface{}) (uint32, error) {
 
 	kind := reflect.TypeOf(val).Kind()
 	if kind == reflect.String {
-		int_, err := strconv.ParseUint(val.(string), 10, 64)
+		str, base := reflectInstance.findBase(val.(string))
+		int_, err := strconv.ParseUint(str, base, 64)
 		if err != nil {
 			return 0, err
 		}
